@@ -1,0 +1,31 @@
+#  importation de la base 
+
+Year <- 1968:1982
+GNP <- c(873.4, 944.0, 992.7, 1077.6, 1185.9, 1326.4, 1434.2, 1549.2, 1718.0, 1918.3, 2163.9, 2417.8, 2633.1, 2937.7, 3057.5)
+Invest <- c(133.3, 149.3, 144.2, 166.4, 195.0, 229.8, 228.7, 206.1, 257.9, 324.1, 386.6, 423.0, 402.3, 471.5, 421.9)
+CPI <- c(82.54, 86.79, 91.45, 96.01, 100.00, 105.75, 115.08, 125.79, 132.34, 140.05, 150.42, 163.42, 178.64, 195.51, 207.23)
+Interest <- c(5.16, 5.87, 5.95, 4.88, 4.50, 6.44, 7.83, 6.25, 5.50, 5.46, 7.46, 10.28, 11.77, 13.42, 11.02)
+
+TableF3 <- data.frame(Year, GNP, Invest, CPI, Interest)
+
+#regression de la variable en fonction des variables Invest, GNP, CPI.
+model <- lm(Interest ~ Invest + GNP + CPI, data = TableF3)
+
+
+
+#  Afficher le tableau d'estimation 
+summary(model)
+
+
+
+
+#Test de significativité individuelle
+
+summary(model)$coefficients[, c("Estimate", "Std. Error", "t value", "Pr(>|t|)")]
+
+# Test de significativité globale 
+anova(model)
+
+#  le test statistique H0: beta1=beta2+2*beta3.
+
+linearHypothesis(model, c("Invest - GNP - 2 * CPI = 0"))
